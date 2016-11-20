@@ -36,19 +36,28 @@ class Comment extends React.Component {
 }
 
 class CommentBox extends React.Component {
-    
+    _getComments() {
+        const commentList = [
+            { id: 1, author: "Morgan Freeman", body: "I like toast."},
+            { id: 2, author: "Katherine Jones", body: "I'm sexy."}
+        ];
+
+        return commentList.map((comment) => {
+            return (
+                <Comment author={comment.author} body={comment.body} key={comment.id} />
+            );
+        });
+    }
     
     render() {
+        const comments = this._getComments();
 
         return (
         <div className="commentBox">
             <h3>Comments</h3>
-            <h4 className="comment-count">??? Comments</h4>
+            <h4 className="comment-count">{comments.length} Comments</h4>
             <div className="comment-list">
-                <Comment 
-                    author="Dude McDudeson" body="Cool stuff, man!" />
-                <Comment 
-                    author="Katherine Jones" body="I'm sexy and I know it" />           
+                {comments}       
             </div>
         </div>
         );
