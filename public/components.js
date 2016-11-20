@@ -47,10 +47,7 @@ class CommentBox extends React.Component {
     }
 
     _getComments() {
-        const commentList = [
-            { id: 1, author: "Morgan Freeman", body: "I like toast."},
-            { id: 2, author: "Katherine Jones", body: "I'm sexy."}
-        ];
+        const commentList = this.state.comments;
 
         return commentList.map((comment) => {
             return (
@@ -65,10 +62,25 @@ class CommentBox extends React.Component {
         });
     }
 
+    _addComment(author, body) {
+        const comment = {
+            id: this.state.comments.length + 1,
+            author, 
+            body
+        };
+        this.setState({
+            comments: this.state.comments.concat([comment])
+        });
+    }
+
     constructor() {
         super();
         this.state = {
-            showComments: false
+            showComments: false, 
+            comments: [
+                { id: 1, author: "Morgan Freeman", body: "I like toast."},
+                { id: 2, author: "Katherine Jones", body: "I'm sexy."}
+            ]
         };
     }
     
@@ -84,11 +96,39 @@ class CommentBox extends React.Component {
 
         return (
         <div className="commentBox">
+            <CommentForm addComment={this._addComment.bind(this)}/>
             <h3>Comments</h3>
             <h4 className="comment-count">{commentsTitle}</h4>
             <button onClick={this._handleClick.bind(this)}>{buttonText}</button>
             {commentNodes}
         </div>
+        );
+    }
+}
+
+class CommentForm extends React.Component {
+    _handleSubmit(event) {
+        event.preventDefault();
+        let author = this._author;
+        let body = this._body;
+
+        this.props.addComment(author.value, body.value);
+    }
+
+    render() {
+        return (
+            <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
+                <label>Join the discussion</label>
+                <div className="comment-for-fields">
+                    <input placeholder="Name:" ref={(input) => this._author = input } />
+                    <textarea placeholder="Comment: " ref={(textArea) => this._body = textArea }></textarea>
+                </div>
+                <div className="comment-form-actions">
+                    <button type="submit">
+                        Post comment
+                    </button>
+                </div>
+            </form>
         );
     }
 }
