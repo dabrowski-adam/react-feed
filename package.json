@@ -1,0 +1,19 @@
+{
+  "name": "story",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-latest": "^6.16.0"
+  },
+  "devDependencies": {
+    "babel-preset-latest": "^6.16.0",
+    "node-static": "^0.7.9",
+    "open": "0.0.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Dąbrowski",
+  "license": "ISC"
+}
