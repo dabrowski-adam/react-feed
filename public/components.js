@@ -36,6 +36,16 @@ class Comment extends React.Component {
 }
 
 class CommentBox extends React.Component {
+    _getCommentsTitle(commentCount) {
+        if (commentCount === 0) {
+            return 'No comments yet';
+        } else if (commentCount === 1) {
+            return '1 comment';
+        } else {
+            return `${commentCount} comments`;
+        }
+    }
+
     _getComments() {
         const commentList = [
             { id: 1, author: "Morgan Freeman", body: "I like toast."},
@@ -51,11 +61,12 @@ class CommentBox extends React.Component {
     
     render() {
         const comments = this._getComments();
+        const commentsTitle = this._getCommentsTitle(comments.length);
 
         return (
         <div className="commentBox">
             <h3>Comments</h3>
-            <h4 className="comment-count">{comments.length} Comments</h4>
+            <h4 className="comment-count">{commentsTitle}</h4>
             <div className="comment-list">
                 {comments}       
             </div>
