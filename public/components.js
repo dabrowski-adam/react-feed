@@ -73,15 +73,26 @@ class CommentBox extends React.Component {
         });
     }
 
+    _fetchComments() {
+        jQuery.ajax({
+            method: 'GET',
+            url: '/api/comments',
+            success: (comments) => {
+                this.setState({ comments });
+            }
+        });
+    }
+
     constructor() {
         super();
         this.state = {
             showComments: false, 
-            comments: [
-                { id: 1, author: "Morgan Freeman", body: "I like toast."},
-                { id: 2, author: "Katherine Jones", body: "I'm sexy."}
-            ]
+            comments: []
         };
+    }
+
+    componentWillMount() {
+        this._fetchComments();
     }
     
     render() {
@@ -103,6 +114,14 @@ class CommentBox extends React.Component {
             {commentNodes}
         </div>
         );
+    }
+
+    componentDidMount() {
+        this._timer = setInterval(() => this._fetchComments(), 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this._timer);
     }
 }
 
